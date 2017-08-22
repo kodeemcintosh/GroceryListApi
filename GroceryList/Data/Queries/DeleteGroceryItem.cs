@@ -41,15 +41,18 @@ namespace GroceryList.Data.Queries
 		    else
 		    {
 			    string sql =
-				    "SELECT item, quantity FROM GroceryItems WHERE item = :item" +
-						"CASE " +
-							"WHEN quantity = :quantity " +
-							"THEN DELETE FROM GroceryItems WHERE item = :item " +
-							"WHEN quantity > :quantity " +
-							"THEN UPDATE GroceryItems SET quantity = (quantity - :quantity) WHERE item = :item" +
-							"WHEN quantity < :quantity " +
-							"THEN RAISE EXCEPTION 'Quantity deleted cannot be more than quantity stored " +
-						"END;";
+//				    "SELECT item, quantity, " +
+////						"IF EXISTS(SELECT * FROM GroceryItems WHERE item >= :item)"
+//						"CASE quantity " +
+//							"WHEN quantity = :quantity " +
+//							"THEN DELETE FROM GroceryItems WHERE item = :item " +
+//
+//							"WHEN quantity > :quantity " +
+//							"THEN UPDATE GroceryItems SET quantity = (quantity - :quantity) WHERE item = :item " +
+//
+//							"ELSE RAISE EXCEPTION 'Quantity deleted cannot be more than quantity stored' " +
+//						"END;";
+				    "DELETE FROM GroceryItems WHERE item = :item;";
 
 				NpgsqlCommand cmd = new NpgsqlCommand(sql, conn);
 //				cmd.Parameters.AddWithValue("@item", item);
