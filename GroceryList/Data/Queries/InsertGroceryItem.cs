@@ -40,8 +40,12 @@ namespace GroceryList.Data.Queries
 				"INSERT INTO GroceryItems " +
 				"VALUES(:item, :quantity);";
 			NpgsqlCommand cmd = new NpgsqlCommand(sql, conn);
-		    cmd.Parameters.AddWithValue("@item", item);
-		    cmd.Parameters.AddWithValue("@quantity", quantity);
+//		    cmd.Parameters.AddWithValue("@item", item);
+//		    cmd.Parameters.AddWithValue("@quantity", quantity);
+		    cmd.Parameters.Add(new NpgsqlParameter("item", NpgsqlTypes.NpgsqlDbType.Text));
+		    cmd.Parameters[0].Value = item;
+		    cmd.Parameters.Add(new NpgsqlParameter("quantity", NpgsqlTypes.NpgsqlDbType.Integer));
+		    cmd.Parameters[1].Value = quantity;
 
 			// Execute Query
 		    cmd.ExecuteNonQuery();

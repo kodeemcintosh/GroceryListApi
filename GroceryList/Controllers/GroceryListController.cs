@@ -36,18 +36,20 @@ namespace GroceryList.Controllers
         }
 
         // PUT API/values/5
-//        [HttpPut("/{item:string}/{quantity:int}")]
-        [HttpPut]
-        public void InsertGroceryItem([FromBody]string item,[FromBody]int quantity)
+        [HttpPut("{item}/{quantity}")]
+        public void InsertGroceryItem(string item, int quantity)
         {
-//			item ?? item :
+			// Null or Empty checks
+	        item = item ?? throw new NullReferenceException("item string is null");
+			if(quantity==0) { throw new Exception("quantity is zero"); }
+
 			// Inserts a new item along with the quantity
 			_groceryService.InsertGroceryItem(item, quantity);
         }
 
         // DELETE API/values/5
-        [HttpDelete]
-        public void DeleteGroceryItem([FromBody]string item,[FromBody] int quantity)
+        [HttpDelete("{item}/{quantity}")]
+        public void DeleteGroceryItem(string item, int quantity)
         {
 			// Removes an item or multiple items
 			_groceryService.DeleteGroceryItem(item, quantity);

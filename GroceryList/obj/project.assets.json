@@ -9780,11 +9780,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "C:\\Repos\\GroceryList\\GroceryList\\GroceryList.csproj",
+      "projectUniqueName": "C:\\Repos\\grocerylist\\GroceryList\\GroceryList.csproj",
       "projectName": "GroceryList",
-      "projectPath": "C:\\Repos\\GroceryList\\GroceryList\\GroceryList.csproj",
+      "projectPath": "C:\\Repos\\grocerylist\\GroceryList\\GroceryList.csproj",
       "packagesPath": "C:\\Users\\kwik\\.nuget\\packages\\",
-      "outputPath": "C:\\Repos\\GroceryList\\GroceryList\\obj\\",
+      "outputPath": "C:\\Repos\\grocerylist\\GroceryList\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\kwik\\AppData\\Roaming\\NuGet\\NuGet.Config",

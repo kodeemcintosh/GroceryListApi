@@ -42,16 +42,21 @@ namespace GroceryList.Data.Queries
 		    {
 			    string sql =
 				    "CASE " +
-						"WHEN ((SELECT quantity FROM GroceryItems WHERE item = :item) <= :quantity) " +
-						"THEN (DELETE FROM GroceryItems WHERE item = :item, quantity) FROM GroceryItems WHERE item = :item) " +
+						"(WHEN ((SELECT quantity FROM GroceryItems WHERE item = :item) <= :quantity) " +
+						"THEN (DELETE FROM GroceryItems WHERE item = :item, quantity) FROM GroceryItems WHERE item = :item)) " +
 
-						"WHEN ((SELECT quantity FROM GroceryItems WHERE item = :item) > :quantity) " +
-						"THEN (UPDATE GroceryItems SET item = :item, quantity = ((SELECT quantity FROM GroceryItems WHERE item = :item) - :quantity) WHERE item = :item) " +
+						"(WHEN ((SELECT quantity FROM GroceryItems WHERE item = :item) > :quantity) " +
+						"THEN (UPDATE GroceryItems SET item = :item, quantity = ((SELECT quantity FROM GroceryItems WHERE item = :item) - :quantity) WHERE item = :item)) " +
 					"END;";
 
 				NpgsqlCommand cmd = new NpgsqlCommand(sql, conn);
-				cmd.Parameters.AddWithValue("@item", item);
-			    cmd.Parameters.AddWithValue("@quantity", quantity);
+//				cmd.Parameters.AddWithValue("@item", item);
+//			    cmd.Parameters.AddWithValue("@quantity", quantity);
+				cmd.Parameters.Add(new NpgsqlParameter("item", NpgsqlTypes.NpgsqlDbType.Text));
+				cmd.Parameters[0].Value = item;
+				cmd.Parameters.Add(new NpgsqlParameter("quantity", NpgsqlTypes.NpgsqlDbType.Integer));
+				cmd.Parameters[1].Value = quantity;
+
 				cmd.ExecuteNonQuery();
 		    }
 
