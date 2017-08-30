@@ -4,11 +4,11 @@ using GroceryList.Data;
 namespace GroceryList.Business
 {
 
-    public class GroceryService : IGrocery
+    public class GroceryService : IGroceryService
     {
-        private readonly IGrocery _groceryRepository;
+        private readonly IGroceryRepository _groceryRepository;
 
-        public GroceryService(IGrocery groceryRepository)
+        public GroceryService(IGroceryRepository groceryRepository)
         {
             _groceryRepository = groceryRepository;
         }
@@ -20,14 +20,24 @@ namespace GroceryList.Business
             return businessGroceryList;
         }
 
-        public void InsertGroceryItem(string item, int quantity)
+		public void InsertGroceryItem(string name)
         {
-	        _groceryRepository.InsertGroceryItem(item, quantity);
+	        _groceryRepository.InsertGroceryItem(name);
         }
 
-		public void DeleteGroceryItem(string item, int quantity)
+        public void UpdateGroceryItem(GroceryItem name)
+        {
+	        _groceryRepository.UpdateGroceryItem(name);
+        }
+
+		public void DeleteGroceryItem(string item)
 		{
-			_groceryRepository.DeleteGroceryItem(item, quantity);
+			_groceryRepository.DeleteGroceryItem(item);
+		}
+
+		public void DeleteGroceryItem(GroceryItem Item)
+		{
+			_groceryRepository.DeleteGroceryItem(Item);
 		}
     }
 }

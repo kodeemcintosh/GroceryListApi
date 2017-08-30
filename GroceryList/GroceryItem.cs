@@ -7,7 +7,7 @@ namespace GroceryList
 {
     public class GroceryItem
     {
-        public string item { get; set; }
-        public int quantity { get; set; }
+        public string Name { get; set; }
+        public int Quantity { get; set; }
     }
 }

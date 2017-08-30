@@ -8,11 +8,12 @@ namespace GroceryList.Controllers
 {
 
     [Route("api/[controller]")]
-    public class GroceryListController : Controller, IGrocery
+//    public class GroceryListController : Controller, IGroceryController
+    public class GroceryListController : Controller
     {
-	    private readonly IGrocery _groceryService;
+	    private readonly IGroceryService _groceryService;
 
-	    public GroceryListController(IGrocery groceryService)
+	    public GroceryListController(IGroceryService groceryService)
 	    {
 		    _groceryService = groceryService;
 	    }
@@ -23,36 +24,42 @@ namespace GroceryList.Controllers
         {
 	        // Should return list of items from a select query
 	        List<GroceryItem> controllerGroceryList = _groceryService.GetGroceryList();
-//			var controllerGroceryList = new List<GroceryItem>
-//			{
-//				new GroceryItem
-//				{
-//					item = "chocolate",
-//					quantity = 2
-//				}
-//			};
 
-	        return controllerGroceryList;
+			return controllerGroceryList;
         }
 
-        // PUT API/values/5
-        [HttpPut("{item}/{quantity}")]
-        public void InsertGroceryItem(string item, int quantity)
+		// Inserts item with quantity or Updates item and quantity
+        [HttpPut]
+        public void PutGroceryItem([FromBody]GroceryItem Item)
         {
 			// Null or Empty checks
-	        item = item ?? throw new NullReferenceException("item string is null");
-			if(quantity==0) { throw new Exception("quantity is zero"); }
+	        Item = Item ?? throw new NullReferenceException("Item object is null");
 
-			// Inserts a new item along with the quantity
-			_groceryService.InsertGroceryItem(item, quantity);
+				// Creates an item or updates an existing item's quantity
+				_groceryService.InsertGroceryItem(Item.Name);
+
+				_groceryService.UpdateGroceryItem(Item);
+
         }
 
-        // DELETE API/values/5
-        [HttpDelete("{item}/{quantity}")]
-        public void DeleteGroceryItem(string item, int quantity)
+		 // DELETE API/values/5
+        [HttpDelete]
+        public void DeleteGroceryItem([FromBody]GroceryItem Item)
         {
-			// Removes an item or multiple items
-			_groceryService.DeleteGroceryItem(item, quantity);
+			// Null or Empty checks
+	        Item = Item ?? throw new NullReferenceException("Item Object is null");
+
+	        if (Item.Quantity != 0)
+	        {
+				// Removes a specific quantity of an item
+				_groceryService.DeleteGroceryItem(Item);
+	        }
+	        else
+	        {
+				// Removes entire item and its quantity from the list
+				_groceryService.DeleteGroceryItem(Item.Name);
+	        }
+
         }
     }
 }

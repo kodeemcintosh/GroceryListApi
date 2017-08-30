@@ -15,8 +15,8 @@ namespace GroceryList.Data.Map
 			    while (dataReader.Read())
 			    {
 				    GroceryItem groceryItem = new GroceryItem();
-				    groceryItem.item = dataReader["item"].ToString();
-				    groceryItem.quantity = (int) dataReader["quantity"];
+				    groceryItem.Name = dataReader["Name"].ToString();
+				    groceryItem.Quantity = (int) dataReader["Quantity"];
 
 				    groceryList.Add(groceryItem);
 			    }

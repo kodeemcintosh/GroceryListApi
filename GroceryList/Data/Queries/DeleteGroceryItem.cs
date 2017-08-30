@@ -27,62 +27,59 @@ namespace GroceryList.Data.Queries
 
 		    return csBuilder.ConnectionString;
 	    }
-	    public void DeleteGroceryItemQuery(string item, int quantity)
+		public void DeleteGroceryItemQuery(string name)
 	    {
+			// Create and Open Database connection
 		    var connectionString = GetConnectionString();
 			NpgsqlConnection conn = new NpgsqlConnection(connectionString);
-
 			conn.Open();
 
-		    if (quantity == 0)
+			string sql =
+				"DELETE FROM GroceryItems " +
+				"WHERE (name = :name);";
+
+			NpgsqlCommand cmd = new NpgsqlCommand(sql, conn);
+			cmd.Parameters.Add(new NpgsqlParameter("name", NpgsqlTypes.NpgsqlDbType.Text));
+			cmd.Parameters[0].Value = name.ToUpper();
+
+			// Run the query
+			cmd.ExecuteNonQuery();
+
+			// Close Database Connection
+			conn.Close();
+	    }
+
+	    public void DeleteGroceryItemQuery(GroceryItem Item)
+	    {
+		    // Create and Open Database connection
+		    var connectionString = GetConnectionString();
+		    NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+		    conn.Open();
+
+		    if (Item.Quantity == 0)
 		    {
 			    Console.WriteLine("This item is not on the Grocery List");
 		    }
 		    else
 		    {
+
 			    string sql =
-//				    "SELECT item, quantity, " +
-////						"IF EXISTS(SELECT * FROM GroceryItems WHERE item >= :item)"
-//						"CASE quantity " +
-//							"WHEN quantity = :quantity " +
-//							"THEN DELETE FROM GroceryItems WHERE item = :item " +
-//
-//							"WHEN quantity > :quantity " +
-//							"THEN UPDATE GroceryItems SET quantity = (quantity - :quantity) WHERE item = :item " +
-//
-//							"ELSE RAISE EXCEPTION 'Quantity deleted cannot be more than quantity stored' " +
-//						"END;";
-				    "DELETE FROM GroceryItems WHERE item = :item;";
+					"UPDATE " +
+						"GroceryItems SET quantity = quantity - :quantity " +
+					"WHERE name = :name AND quantity >= :quantity;";
 
-				NpgsqlCommand cmd = new NpgsqlCommand(sql, conn);
-//				cmd.Parameters.AddWithValue("@item", item);
-//			    cmd.Parameters.AddWithValue("@quantity", quantity);
-				cmd.Parameters.Add(new NpgsqlParameter("item", NpgsqlTypes.NpgsqlDbType.Text));
-				cmd.Parameters[0].Value = item;
-				cmd.Parameters.Add(new NpgsqlParameter("quantity", NpgsqlTypes.NpgsqlDbType.Integer));
-				cmd.Parameters[1].Value = quantity;
+			    NpgsqlCommand cmd = new NpgsqlCommand(sql, conn);
+			    cmd.Parameters.Add(new NpgsqlParameter("name", NpgsqlTypes.NpgsqlDbType.Text));
+			    cmd.Parameters[0].Value = Item.Name.ToUpper();
+			    cmd.Parameters.Add(new NpgsqlParameter("quantity", NpgsqlTypes.NpgsqlDbType.Integer));
+			    cmd.Parameters[1].Value = Item.Quantity;
 
-				cmd.ExecuteNonQuery();
+			    // Run query
+			    cmd.ExecuteNonQuery();
+
+			    // Close Database Connection
+			    conn.Close();
 		    }
-
-			conn.Close();
-
-//			else
-//		    {
-//				string sql =
-//					"DELETE :item AND :quantity" +
-//					"FROM GroceryItem" +
-//					"WHERE item=':item'";
-//				NpgsqlCommand cmd = new NpgsqlCommand(sql, conn);
-//				cmd.Parameters.AddWithValue("@item", item);
-//
-//			    cmd.Parameters.AddWithValue("@quantity", quantity);
-//				cmd.ExecuteNonQuery();
-//		    }
-
-
-		    //cmd.Connection = conn;
-		    //cmd.CommandText = sql;
 	    }
     }
 }
