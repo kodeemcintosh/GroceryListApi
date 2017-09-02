@@ -26,7 +26,7 @@ namespace GroceryList.Data.Queries
 		    return csBuilder.ConnectionString;
 	    }
 
-	    public void UpdateGroceryItemQuery(GroceryItem Item)
+	    public void UpdateGroceryItemQuery(GroceryItem Request)
 	    {
 			// Create and Open Database Connection
 		    var connectionString = GetConnectionString();
@@ -41,9 +41,9 @@ namespace GroceryList.Data.Queries
 
 			NpgsqlCommand cmd = new NpgsqlCommand(sql, conn);
 		    cmd.Parameters.Add(new NpgsqlParameter("name", NpgsqlTypes.NpgsqlDbType.Text));
-		    cmd.Parameters[0].Value = Item.Name.ToUpper();
+		    cmd.Parameters[0].Value = Request.name.ToUpper();
 		    cmd.Parameters.Add(new NpgsqlParameter("quantity", NpgsqlTypes.NpgsqlDbType.Integer));
-		    cmd.Parameters[1].Value = Item.Quantity;
+		    cmd.Parameters[1].Value = Request.quantity;
 
 			// Execute Query
 		    cmd.ExecuteNonQuery();

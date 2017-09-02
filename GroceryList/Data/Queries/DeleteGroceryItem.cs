@@ -56,7 +56,7 @@ namespace GroceryList.Data.Queries
 		    NpgsqlConnection conn = new NpgsqlConnection(connectionString);
 		    conn.Open();
 
-		    if (Item.Quantity == 0)
+		    if (Item.quantity == 0)
 		    {
 			    Console.WriteLine("This item is not on the Grocery List");
 		    }
@@ -70,9 +70,9 @@ namespace GroceryList.Data.Queries
 
 			    NpgsqlCommand cmd = new NpgsqlCommand(sql, conn);
 			    cmd.Parameters.Add(new NpgsqlParameter("name", NpgsqlTypes.NpgsqlDbType.Text));
-			    cmd.Parameters[0].Value = Item.Name.ToUpper();
+			    cmd.Parameters[0].Value = Item.name.ToUpper();
 			    cmd.Parameters.Add(new NpgsqlParameter("quantity", NpgsqlTypes.NpgsqlDbType.Integer));
-			    cmd.Parameters[1].Value = Item.Quantity;
+			    cmd.Parameters[1].Value = Item.quantity;
 
 			    // Run query
 			    cmd.ExecuteNonQuery();

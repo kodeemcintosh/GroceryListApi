@@ -7,3 +7,4 @@ C:\Repos\grocerylist\GroceryList\obj\Debug\netcoreapp1.1\GroceryList.csproj.Core
 C:\Repos\grocerylist\GroceryList\obj\Debug\netcoreapp1.1\GroceryList.AssemblyInfo.cs
 C:\Repos\grocerylist\GroceryList\obj\Debug\netcoreapp1.1\GroceryList.dll
 C:\Repos\grocerylist\GroceryList\obj\Debug\netcoreapp1.1\GroceryList.pdb
+C:\Repos\grocerylist\GroceryList\obj\Debug\netcoreapp1.1\GroceryList.csprojResolveAssemblyReference.cache

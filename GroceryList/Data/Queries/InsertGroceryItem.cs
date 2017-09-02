@@ -35,7 +35,7 @@ namespace GroceryList.Data.Queries
 			// Define Query
 			string sql =
 					"INSERT INTO GroceryItems " +
-					"VALUES (:name, 0) " +
+					"VALUES (:name, 1) " +
 					"ON CONFLICT (name) DO NOTHING;";
 
 			NpgsqlCommand cmd = new NpgsqlCommand(sql, conn);

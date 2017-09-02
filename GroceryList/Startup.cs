@@ -34,8 +34,8 @@ namespace GroceryList
         {
             // Add framework services.
             services.AddMvc();
-	        services.AddTransient<IGroceryService, GroceryService>();
-	        services.AddTransient<IGroceryRepository, GroceryRepository>();
+	        services.AddTransient<IGrocery, GroceryService>();
+	        services.AddTransient<IGrocery, GroceryRepository>();
 	        services.AddTransient<IDataMapper, DataMapper>();
 	        services.AddSingleton<GetGroceryList>();
 	        services.AddSingleton<InsertGroceryItem>();

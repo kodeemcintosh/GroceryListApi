@@ -4,7 +4,7 @@ using GroceryList.Data.Queries;
 
 namespace GroceryList.Data
 {
-    public class GroceryRepository : IGroceryRepository
+    public class GroceryRepository : IGrocery
     {
 	    private readonly GetGroceryList _getGroceryList;
 	    private readonly InsertGroceryItem _insertGroceryItem;
@@ -19,22 +19,28 @@ namespace GroceryList.Data
 		    _deleteGroceryItem = deleteGroceryItem ?? throw new ArgumentNullException(nameof(deleteGroceryItem));
 	    }
 
-        public List<GroceryItem> GetGroceryList()
+		public List<GroceryItem> GetGroceryList()
         {
 	        List<GroceryItem> dataGroceryList = _getGroceryList.GetGroceryListQuery();
 
 	        return dataGroceryList;
         }
 
+        public List<GroceryItem> GetGroceryList(BaseRequest DataRequest)
+        {
+	        List<GroceryItem> dataGroceryList = _getGroceryList.GetGroceryListQuery(DataRequest);
+
+	        return dataGroceryList;
+        }
+
 	    public void InsertGroceryItem(string name)
 	    {
-
 		    _insertGroceryItem.InsertGroceryItemQuery(name);
 	    }
 
-		public void UpdateGroceryItem(GroceryItem Item)
+		public void UpdateGroceryItem(GroceryItem DataRequest)
 	    {
-		    _updateGroceryItem.UpdateGroceryItemQuery(Item);
+		    _updateGroceryItem.UpdateGroceryItemQuery(DataRequest);
 	    }
 
 	    public void DeleteGroceryItem(string name)
@@ -42,9 +48,9 @@ namespace GroceryList.Data
 		    _deleteGroceryItem.DeleteGroceryItemQuery(name);
 	    }
 
-	    public void DeleteGroceryItem(GroceryItem Item)
+	    public void DeleteGroceryItem(GroceryItem DataRequest)
 	    {
-		    _deleteGroceryItem.DeleteGroceryItemQuery(Item);
+		    _deleteGroceryItem.DeleteGroceryItemQuery(DataRequest);
 	    }
     }
 }
