@@ -14,11 +14,13 @@ namespace GroceryList.Data.Map
 		    {
 			    while (dataReader.Read())
 			    {
-				    GroceryItem groceryItem = new GroceryItem();
-				    groceryItem.item = dataReader["item"].ToString();
-				    groceryItem.quantity = (int) dataReader["quantity"];
+					GroceryItem groceryItem = new GroceryItem
+					{
+						name = dataReader["Name"].ToString(),
+						quantity = (int)dataReader["Quantity"]
+					};
 
-				    groceryList.Add(groceryItem);
+					groceryList.Add(groceryItem);
 			    }
 		    }
 		    catch (NpgsqlException e)

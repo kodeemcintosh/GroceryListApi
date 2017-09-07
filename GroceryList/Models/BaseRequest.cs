@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace GroceryList
 {
-    public class GroceryItem
+    public class BaseRequest
     {
-        public string item { get; set; }
-        public int quantity { get; set; }
+		public string sortField { get; set; }
+
+		public string sortDirection { get; set; }
     }
 }

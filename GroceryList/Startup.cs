@@ -39,6 +39,7 @@ namespace GroceryList
 	        services.AddTransient<IDataMapper, DataMapper>();
 	        services.AddSingleton<GetGroceryList>();
 	        services.AddSingleton<InsertGroceryItem>();
+	        services.AddSingleton<UpdateGroceryItem>();
 	        services.AddSingleton<DeleteGroceryItem>();
         }
 

@@ -12,7 +12,6 @@ namespace GroceryList.Business
         {
             _groceryRepository = groceryRepository;
         }
-
 		public List<GroceryItem> GetGroceryList()
 		{
 			List<GroceryItem> businessGroceryList = _groceryRepository.GetGroceryList();
@@ -20,14 +19,31 @@ namespace GroceryList.Business
             return businessGroceryList;
         }
 
-        public void InsertGroceryItem(string item, int quantity)
-        {
-	        _groceryRepository.InsertGroceryItem(item, quantity);
+		public List<GroceryItem> GetGroceryList(BaseRequest BusinessRequest)
+		{
+			List<GroceryItem> businessGroceryList = _groceryRepository.GetGroceryList(BusinessRequest);
+
+            return businessGroceryList;
         }
 
-		public void DeleteGroceryItem(string item, int quantity)
+		public void InsertGroceryItem(string name)
+        {
+	        _groceryRepository.InsertGroceryItem(name);
+        }
+
+        public void UpdateGroceryItem(GroceryItem BusinessRequest)
+        {
+	        _groceryRepository.UpdateGroceryItem(BusinessRequest);
+        }
+
+		public void DeleteGroceryItem(string item)
 		{
-			_groceryRepository.DeleteGroceryItem(item, quantity);
+			_groceryRepository.DeleteGroceryItem(item);
+		}
+
+		public void DeleteGroceryItem(GroceryItem BusinessRequest)
+		{
+			_groceryRepository.DeleteGroceryItem(BusinessRequest);
 		}
     }
 }

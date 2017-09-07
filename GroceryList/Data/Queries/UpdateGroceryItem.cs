@@ -2,9 +2,9 @@
 
 namespace GroceryList.Data.Queries
 {
-    public class InsertGroceryItem
+    public class UpdateGroceryItem
     {
-	    public InsertGroceryItem()
+	    public UpdateGroceryItem()
 	    {
 	    }
 
@@ -25,7 +25,8 @@ namespace GroceryList.Data.Queries
 
 		    return csBuilder.ConnectionString;
 	    }
-		public void InsertGroceryItemQuery(string name)
+
+	    public void UpdateGroceryItemQuery(GroceryItem Request)
 	    {
 			// Create and Open Database Connection
 		    var connectionString = GetConnectionString();
@@ -33,14 +34,16 @@ namespace GroceryList.Data.Queries
 			conn.Open();
 
 			// Define Query
-			string sql =
-					"INSERT INTO GroceryItems " +
-					"VALUES (:name, 1) " +
-					"ON CONFLICT (name) DO NOTHING;";
+		    string sql =
+			    "UPDATE " +
+					"GroceryItems SET quantity = (quantity + :quantity) " +
+			    "WHERE name = :name;";
 
 			NpgsqlCommand cmd = new NpgsqlCommand(sql, conn);
 		    cmd.Parameters.Add(new NpgsqlParameter("name", NpgsqlTypes.NpgsqlDbType.Text));
-		    cmd.Parameters[0].Value = name.ToUpper();
+		    cmd.Parameters[0].Value = Request.name.ToUpper();
+		    cmd.Parameters.Add(new NpgsqlParameter("quantity", NpgsqlTypes.NpgsqlDbType.Integer));
+		    cmd.Parameters[1].Value = Request.quantity;
 
 			// Execute Query
 		    cmd.ExecuteNonQuery();

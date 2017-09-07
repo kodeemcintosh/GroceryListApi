@@ -31,17 +31,21 @@ namespace GroceryList.Data.Queries
 	    }
 
 	    public List<GroceryItem> GetGroceryListQuery()
-		{
+	    {
+
+			// Create and open database connection
 			string connectionString = GetConnectionString();
 			NpgsqlConnection conn = new NpgsqlConnection(connectionString);
 			conn.Open();
 
 			// Define Query
-			var sql = "SELECT * FROM GroceryItems;";
+			var sql = "SELECT * FROM GroceryItems " +
+				"ORDER BY last_modified ASC NULLS LAST;";
 			NpgsqlCommand cmd = new NpgsqlCommand(sql, conn);
 
 			// Execute Query
 			NpgsqlDataReader dataReader = cmd.ExecuteReader();
+
 			List<GroceryItem> groceryList = new List<GroceryItem>();
 
 //			try
@@ -58,6 +62,33 @@ namespace GroceryList.Data.Queries
 //				Console.WriteLine("Closing connections");
 			conn.Close();
 //			}
+
+		    return groceryList;
+	    }
+
+	    public List<GroceryItem> GetGroceryListQuery(BaseRequest Request)
+	    {
+
+		    Request.sortField = Request.sortField ?? "last_modified";
+		    Request.sortDirection = Request.sortDirection ?? "ASC";
+
+			// Create and open database connection
+			string connectionString = GetConnectionString();
+			NpgsqlConnection conn = new NpgsqlConnection(connectionString);
+			conn.Open();
+
+			// Define Query
+		    var sql = "SELECT * FROM GroceryItems " +
+		              "WHERE 1 = 1 ";
+			NpgsqlCommand cmd = new NpgsqlCommand(sql, conn);
+
+			// Execute Query
+			NpgsqlDataReader dataReader = cmd.ExecuteReader();
+
+			List<GroceryItem> groceryList = new List<GroceryItem>();
+			groceryList = _dataMapper.GetGroceryItemsMapper(dataReader);
+
+			conn.Close();
 
 		    return groceryList;
 	    }

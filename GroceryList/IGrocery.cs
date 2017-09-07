@@ -6,8 +6,14 @@ namespace GroceryList
     {
         List<GroceryItem> GetGroceryList();
 
-        void InsertGroceryItem(string item, int quantity);
+        List<GroceryItem> GetGroceryList(BaseRequest Request);
 
-	    void DeleteGroceryItem(string item, int quantity);
+        void InsertGroceryItem(string request);
+
+        void UpdateGroceryItem(GroceryItem Request);
+
+	    void DeleteGroceryItem(string request);
+
+	    void DeleteGroceryItem(GroceryItem Request);
     }
 }
