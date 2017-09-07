@@ -1,4 +1,5 @@
-﻿using Npgsql;
+﻿using System;
+using Npgsql;
 
 namespace GroceryList.Data.Queries
 {
@@ -26,7 +27,7 @@ namespace GroceryList.Data.Queries
 		    return csBuilder.ConnectionString;
 	    }
 
-	    public void UpdateGroceryItemQuery(GroceryItem Request)
+	    public void AddGroceryItemQuery(GroceryItem Request)
 	    {
 			// Create and Open Database Connection
 		    var connectionString = GetConnectionString();

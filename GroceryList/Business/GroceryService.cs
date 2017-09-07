@@ -31,19 +31,20 @@ namespace GroceryList.Business
 	        _groceryRepository.InsertGroceryItem(name);
         }
 
-        public void UpdateGroceryItem(GroceryItem BusinessRequest)
+        public void AddGroceryItem(GroceryItem BusinessRequest)
         {
-	        _groceryRepository.UpdateGroceryItem(BusinessRequest);
+	        _groceryRepository.AddGroceryItem(BusinessRequest);
         }
+
+		public void RemoveGroceryItem(GroceryItem BusinessRequest)
+		{
+			_groceryRepository.RemoveGroceryItem(BusinessRequest);
+		}
 
 		public void DeleteGroceryItem(string item)
 		{
 			_groceryRepository.DeleteGroceryItem(item);
 		}
 
-		public void DeleteGroceryItem(GroceryItem BusinessRequest)
-		{
-			_groceryRepository.DeleteGroceryItem(BusinessRequest);
-		}
     }
 }

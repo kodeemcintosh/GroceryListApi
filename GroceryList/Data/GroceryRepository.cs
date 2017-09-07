@@ -38,19 +38,18 @@ namespace GroceryList.Data
 		    _insertGroceryItem.InsertGroceryItemQuery(name);
 	    }
 
-		public void UpdateGroceryItem(GroceryItem DataRequest)
+		public void AddGroceryItem(GroceryItem DataRequest)
 	    {
-		    _updateGroceryItem.UpdateGroceryItemQuery(DataRequest);
+		    _updateGroceryItem.AddGroceryItemQuery(DataRequest);
 	    }
-
+	    public void RemoveGroceryItem(GroceryItem DataRequest)
+	    {
+		    _deleteGroceryItem.RemoveGroceryItemQuery(DataRequest);
+	    }
 	    public void DeleteGroceryItem(string name)
 	    {
 		    _deleteGroceryItem.DeleteGroceryItemQuery(name);
 	    }
 
-	    public void DeleteGroceryItem(GroceryItem DataRequest)
-	    {
-		    _deleteGroceryItem.DeleteGroceryItemQuery(DataRequest);
-	    }
     }
 }

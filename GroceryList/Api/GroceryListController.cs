@@ -35,31 +35,38 @@ namespace GroceryList.Api
 			// Null or Empty checks
 	        ApiRequest = ApiRequest ?? throw new NullReferenceException("Item object is null");
 
-				// Creates an item or updates an existing item's quantity
-				_groceryService.InsertGroceryItem(ApiRequest.name);
-
-				_groceryService.UpdateGroceryItem(ApiRequest);
-
-        }
-
-		 // DELETE API/values/5
-        [HttpDelete]
-        public void DeleteGroceryItem([FromBody] GroceryItem ApiRequest)
-        {
-			// Null or Empty checks
-	        ApiRequest = ApiRequest ?? throw new NullReferenceException("Item Object is null");
+			// Creates an item or updates an existing item's quantity
+			_groceryService.InsertGroceryItem(ApiRequest.name);
 
 	        if (ApiRequest.quantity != 0)
 	        {
-				// Removes a specific quantity of an item
-				_groceryService.DeleteGroceryItem(ApiRequest);
+				// Adds specified quantity
+				_groceryService.AddGroceryItem(ApiRequest);
+	        }
+	        else
+	        {
+				// Adds a single item
+		        _groceryService.AddGroceryItem(new GroceryItem { name = ApiRequest.name, quantity = 1 });
+	        }
+        }
+
+		 // DELETE API/values/5
+        [HttpPut]
+        public void DeleteGroceryItem([FromBody] GroceryItem ApiRequest)
+        {
+			// Null or Empty checks
+	        ApiRequest = ApiRequest ?? throw new NullReferenceException("string is null");
+
+	        if (ApiRequest.quantity != 0)
+	        {
+				// Removes quantity specified in http Put request
+		        _groceryService.RemoveGroceryItem(ApiRequest);
 	        }
 	        else
 	        {
 				// Removes entire item and its quantity from the list
 				_groceryService.DeleteGroceryItem(ApiRequest.name);
 	        }
-
         }
     }
 }

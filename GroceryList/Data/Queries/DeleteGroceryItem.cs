@@ -49,37 +49,9 @@ namespace GroceryList.Data.Queries
 			conn.Close();
 	    }
 
-	    public void DeleteGroceryItemQuery(GroceryItem Item)
-	    {
-		    // Create and Open Database connection
-		    var connectionString = GetConnectionString();
-		    NpgsqlConnection conn = new NpgsqlConnection(connectionString);
-		    conn.Open();
-
-		    if (Item.quantity == 0)
-		    {
-			    Console.WriteLine("This item is not on the Grocery List");
-		    }
-		    else
-		    {
-
-			    string sql =
-					"UPDATE " +
-						"GroceryItems SET quantity = quantity - :quantity " +
-					"WHERE name = :name AND quantity >= :quantity;";
-
-			    NpgsqlCommand cmd = new NpgsqlCommand(sql, conn);
-			    cmd.Parameters.Add(new NpgsqlParameter("name", NpgsqlTypes.NpgsqlDbType.Text));
-			    cmd.Parameters[0].Value = Item.name.ToUpper();
-			    cmd.Parameters.Add(new NpgsqlParameter("quantity", NpgsqlTypes.NpgsqlDbType.Integer));
-			    cmd.Parameters[1].Value = Item.quantity;
-
-			    // Run query
-			    cmd.ExecuteNonQuery();
-
-			    // Close Database Connection
-			    conn.Close();
-		    }
-	    }
-    }
+		internal void RemoveGroceryItemQuery(GroceryItem dataRequest)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }
