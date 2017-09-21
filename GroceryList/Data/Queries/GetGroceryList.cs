@@ -79,8 +79,13 @@ namespace GroceryList.Data.Queries
 
 			// Define Query
 		    var sql = "SELECT * FROM GroceryItems " +
-		              "WHERE 1 = 1 ";
+		              "WHERE 1 = 1 " +
+		              "ORDER BY :sortField :sortDirection";
 			NpgsqlCommand cmd = new NpgsqlCommand(sql, conn);
+		    cmd.Parameters.Add(new NpgsqlParameter("sortField", NpgsqlTypes.NpgsqlDbType.Text));
+		    cmd.Parameters[0].Value = Request.sortField.ToUpper();
+		    cmd.Parameters.Add(new NpgsqlParameter("sortDirection", NpgsqlTypes.NpgsqlDbType.Text));
+		    cmd.Parameters[1].Value = Request.sortDirection.ToUpper();
 
 			// Execute Query
 			NpgsqlDataReader dataReader = cmd.ExecuteReader();
