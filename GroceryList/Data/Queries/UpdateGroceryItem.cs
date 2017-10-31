@@ -18,7 +18,11 @@ namespace GroceryList.Data.Queries
 	    {
 		    var csBuilder = new NpgsqlConnectionStringBuilder()
 		    {
-			    Host = SERVER,
+//				Host = Environment.GetEnvironmentVariable("GL_HOST"),
+//			    Database = Environment.GetEnvironmentVariable("GL_DATABASE"),
+//			    Username = Environment.GetEnvironmentVariable("GL_USER"),
+//			    Password = Environment.GetEnvironmentVariable("GL_PASSWORD")
+				Host = SERVER,
 			    Database = DATABASE,
 			    Username = USER,
 			    Password = PASSWORD
@@ -41,10 +45,10 @@ namespace GroceryList.Data.Queries
 			    "WHERE name = :name;";
 
 			NpgsqlCommand cmd = new NpgsqlCommand(sql, conn);
-		    cmd.Parameters.Add(new NpgsqlParameter("name", NpgsqlTypes.NpgsqlDbType.Text));
-		    cmd.Parameters[0].Value = Request.name.ToUpper();
 		    cmd.Parameters.Add(new NpgsqlParameter("quantity", NpgsqlTypes.NpgsqlDbType.Integer));
-		    cmd.Parameters[1].Value = Request.quantity;
+		    cmd.Parameters[0].Value = Request.quantity;
+			cmd.Parameters.Add(new NpgsqlParameter("name", NpgsqlTypes.NpgsqlDbType.Text));
+		    cmd.Parameters[1].Value = Request.name.ToUpper();
 
 			// Execute Query
 		    cmd.ExecuteNonQuery();

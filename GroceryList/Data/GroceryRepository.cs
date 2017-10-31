@@ -9,13 +9,15 @@ namespace GroceryList.Data
 	    private readonly GetGroceryList _getGroceryList;
 	    private readonly InsertGroceryItem _insertGroceryItem;
 	    private readonly UpdateGroceryItem _updateGroceryItem;
+	    private readonly RemoveGroceryItem _removeGroceryItem;
 	    private readonly DeleteGroceryItem _deleteGroceryItem;
 
-	    public GroceryRepository(GetGroceryList getGroceryList, InsertGroceryItem insertGroceryItem,UpdateGroceryItem updateGroceryItem, DeleteGroceryItem deleteGroceryItem)
+	    public GroceryRepository(GetGroceryList getGroceryList, InsertGroceryItem insertGroceryItem,UpdateGroceryItem updateGroceryItem,RemoveGroceryItem removeGroceryItem, DeleteGroceryItem deleteGroceryItem)
 	    {
 		    _getGroceryList = getGroceryList ?? throw new ArgumentNullException(nameof(getGroceryList));
 		    _insertGroceryItem = insertGroceryItem ?? throw new ArgumentNullException(nameof(insertGroceryItem));
 		    _updateGroceryItem = updateGroceryItem ?? throw new ArgumentNullException(nameof(updateGroceryItem));
+		    _removeGroceryItem = removeGroceryItem ?? throw new ArgumentNullException(nameof(removeGroceryItem));
 		    _deleteGroceryItem = deleteGroceryItem ?? throw new ArgumentNullException(nameof(deleteGroceryItem));
 	    }
 
@@ -44,7 +46,7 @@ namespace GroceryList.Data
 	    }
 	    public void RemoveGroceryItem(GroceryItem DataRequest)
 	    {
-		    _deleteGroceryItem.RemoveGroceryItemQuery(DataRequest);
+		    _removeGroceryItem.RemoveGroceryItemQuery(DataRequest);
 	    }
 	    public void DeleteGroceryItem(string name)
 	    {

@@ -19,7 +19,11 @@ namespace GroceryList.Data.Queries
 	    {
 		    var csBuilder = new NpgsqlConnectionStringBuilder()
 		    {
-			    Host = SERVER,
+//			    Host = Environment.GetEnvironmentVariable("GL_HOST"),
+//			    Database = Environment.GetEnvironmentVariable("GL_DATABASE"),
+//			    Username = Environment.GetEnvironmentVariable("GL_USER"),
+//			    Password = Environment.GetEnvironmentVariable("GL_PASSWORD")
+				Host = SERVER,
 			    Database = DATABASE,
 			    Username = USER,
 			    Password = PASSWORD
@@ -48,10 +52,5 @@ namespace GroceryList.Data.Queries
 			// Close Database Connection
 			conn.Close();
 	    }
-
-		internal void RemoveGroceryItemQuery(GroceryItem dataRequest)
-		{
-			throw new NotImplementedException();
-		}
 	}
 }

@@ -40,6 +40,7 @@ namespace GroceryList
 	        services.AddSingleton<GetGroceryList>();
 	        services.AddSingleton<InsertGroceryItem>();
 	        services.AddSingleton<UpdateGroceryItem>();
+	        services.AddSingleton<RemoveGroceryItem>();
 	        services.AddSingleton<DeleteGroceryItem>();
         }
 

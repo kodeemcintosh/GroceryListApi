@@ -1,0 +1,21 @@
+# Uses the standard dotnet core build container
+FROM microsoft/aspnetcore-build
+WORKDIR /GroceryList
+######### These are container specific configurations #########
+# Sets environment variables for the GroceryList's database connection
+ENV GL_HOST localhost
+ENV GL_DATABASE grocerylistdb
+ENV GL_USER kwik
+ENV GL_PASSWORD pNyn8_5E
+
+# Sets up the api port
+ENV ASPNETCORE_URLS http://+:80
+EXPOSE 80
+
+###############################################################
+
+COPY *.csproj .
+RUN dotnet restore
+
+COPY . .
+RUN dotnet publish --output /out --configuration Release

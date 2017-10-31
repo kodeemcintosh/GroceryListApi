@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using GroceryList.Business;
+using GroceryList.Data.Queries;
 
 namespace GroceryList.Api
 {
@@ -18,12 +19,16 @@ namespace GroceryList.Api
 
         // GET API/values
         [HttpGet]
-        public List<GroceryItem> GetGroceryList([FromBody] BaseRequest ApiRequest = null)
+        public List<GroceryItem> GetGroceryList([FromBody] BaseRequest ApiRequest)
         {
-	        ApiRequest = ApiRequest ?? new BaseRequest();
+//	        ApiRequest = ApiRequest ?? new BaseRequest{ sortField = "last_modified", sortDirection = "ASC"};
+//	        ApiRequest = ApiRequest ?? new BaseRequest();
 
+
+//	        List<GroceryItem> apiGroceryList = _groceryService.GetGroceryList();
 	        // Should return list of items from a select query
 	        List<GroceryItem> apiGroceryList = _groceryService.GetGroceryList(ApiRequest);
+//	        List<GroceryItem> apiGroceryList = ApiRequest == null ? _groceryService.GetGroceryList(): _groceryService.GetGroceryList(ApiRequest);
 
 			return apiGroceryList;
         }
@@ -38,8 +43,11 @@ namespace GroceryList.Api
 			// Creates an item or updates an existing item's quantity
 			_groceryService.InsertGroceryItem(ApiRequest.name);
 
-	        if (ApiRequest.quantity != 0)
+	        if (ApiRequest.quantity > 0)
 	        {
+				// Reduces quantity by one to make up for the 1 added in the initial existence check
+		        ApiRequest.quantity--;
+
 				// Adds specified quantity
 				_groceryService.AddGroceryItem(ApiRequest);
 	        }
@@ -51,7 +59,7 @@ namespace GroceryList.Api
         }
 
 		 // DELETE API/values/5
-        [HttpPut]
+        [HttpDelete]
         public void DeleteGroceryItem([FromBody] GroceryItem ApiRequest)
         {
 			// Null or Empty checks

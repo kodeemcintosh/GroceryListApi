@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GroceryList.Data.Map;
 using Npgsql;
 
@@ -21,7 +22,11 @@ namespace GroceryList.Data.Queries
 	    {
 		    var csBuilder = new NpgsqlConnectionStringBuilder()
 		    {
-			    Host = SERVER,
+//			    Host = Environment.GetEnvironmentVariable("GL_HOST"),
+//			    Database = Environment.GetEnvironmentVariable("GL_DATABASE"),
+//			    Username = Environment.GetEnvironmentVariable("GL_USER"),
+//			    Password = Environment.GetEnvironmentVariable("GL_PASSWORD")
+				Host = SERVER,
 			    Database = DATABASE,
 			    Username = USER,
 			    Password = PASSWORD
@@ -40,7 +45,8 @@ namespace GroceryList.Data.Queries
 
 			// Define Query
 			var sql = "SELECT * FROM GroceryItems " +
-				"ORDER BY last_modified ASC NULLS LAST;";
+			          "WHERE 1 = 1 " +
+			          "ORDER BY last_modified ASC NULLS LAST;";
 			NpgsqlCommand cmd = new NpgsqlCommand(sql, conn);
 
 			// Execute Query
@@ -48,20 +54,9 @@ namespace GroceryList.Data.Queries
 
 			List<GroceryItem> groceryList = new List<GroceryItem>();
 
-//			try
-//			{
 			groceryList = _dataMapper.GetGroceryItemsMapper(dataReader);
-//			}
-//			catch (NpgsqlException e)
-//			{
-//				Console.WriteLine(e);
-//				throw;
-//			}
-//			finally
-//			{
-//				Console.WriteLine("Closing connections");
+
 			conn.Close();
-//			}
 
 		    return groceryList;
 	    }
@@ -69,29 +64,30 @@ namespace GroceryList.Data.Queries
 	    public List<GroceryItem> GetGroceryListQuery(BaseRequest Request)
 	    {
 
-		    Request.sortField = Request.sortField ?? "last_modified";
-		    Request.sortDirection = Request.sortDirection ?? "ASC";
+		    Request = Request ?? new BaseRequest
+		    {
+			    sortField = "name",
+			    sortDirection = "asc"
+		    };
 
-			// Create and open database connection
+   			// Create and open database connection
 			string connectionString = GetConnectionString();
 			NpgsqlConnection conn = new NpgsqlConnection(connectionString);
 			conn.Open();
 
 			// Define Query
+			// could not parameterize for ORDER BY forcing me to use string interpolation
 		    var sql = "SELECT * FROM GroceryItems " +
 		              "WHERE 1 = 1 " +
-		              "ORDER BY :sortField :sortDirection";
+		              $"ORDER BY {Request.sortField} {Request.sortDirection} NULLS LAST;";
+
 			NpgsqlCommand cmd = new NpgsqlCommand(sql, conn);
-		    cmd.Parameters.Add(new NpgsqlParameter("sortField", NpgsqlTypes.NpgsqlDbType.Text));
-		    cmd.Parameters[0].Value = Request.sortField.ToUpper();
-		    cmd.Parameters.Add(new NpgsqlParameter("sortDirection", NpgsqlTypes.NpgsqlDbType.Text));
-		    cmd.Parameters[1].Value = Request.sortDirection.ToUpper();
 
 			// Execute Query
 			NpgsqlDataReader dataReader = cmd.ExecuteReader();
 
-			List<GroceryItem> groceryList = new List<GroceryItem>();
-			groceryList = _dataMapper.GetGroceryItemsMapper(dataReader);
+//			List<GroceryItem> groceryList = new List<GroceryItem>();
+			List<GroceryItem> groceryList = _dataMapper.GetGroceryItemsMapper(dataReader);
 
 			conn.Close();
 
