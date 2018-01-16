@@ -8,9 +8,9 @@ namespace GroceryList
 
         List<GroceryItem> GetGroceryList(BaseRequest Request);
 
-        void InsertGroceryItem(string request);
+        void CreateGroceryItem(GroceryItem Request);
 
-        void AddGroceryItem(GroceryItem Request);
+        void UpdateGroceryList(GroceryItem Request);
 
         void RemoveGroceryItem(GroceryItem Request);
 

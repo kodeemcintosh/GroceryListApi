@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.8
+VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GroceryList", "GroceryList\GroceryList.csproj", "{21B264CB-559F-4FBF-A38C-D2FF8E1C4F5E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroceryList", "GroceryList\GroceryList.csproj", "{41B8A123-F0FF-40BE-8197-0664DF27F8D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{21B264CB-559F-4FBF-A38C-D2FF8E1C4F5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{21B264CB-559F-4FBF-A38C-D2FF8E1C4F5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{21B264CB-559F-4FBF-A38C-D2FF8E1C4F5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{21B264CB-559F-4FBF-A38C-D2FF8E1C4F5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41B8A123-F0FF-40BE-8197-0664DF27F8D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41B8A123-F0FF-40BE-8197-0664DF27F8D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41B8A123-F0FF-40BE-8197-0664DF27F8D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41B8A123-F0FF-40BE-8197-0664DF27F8D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {329687B1-292A-4DF4-B691-80D049E43F9C}
+		SolutionGuid = {DF34E03F-70ED-44D8-B62D-F9BF5485C739}
 	EndGlobalSection
 EndGlobal

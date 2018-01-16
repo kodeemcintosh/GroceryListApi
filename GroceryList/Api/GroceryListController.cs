@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.Http.Routing;
 using Microsoft.AspNetCore.Mvc;
 using GroceryList.Business;
 using GroceryList.Data.Queries;
+using GroceryList.Models;
+using Microsoft.AspNetCore.Cors;
 
 namespace GroceryList.Api
 {
 
-    [Route("api/[controller]")]
+	[EnableCors("CORS_POLICY")]
     public class GroceryListController : Controller
     {
 	    private readonly IGrocery _groceryService;
@@ -19,48 +22,50 @@ namespace GroceryList.Api
 
         // GET API/values
         [HttpGet]
+		[Route("/api/v1/GroceryList")]
         public List<GroceryItem> GetGroceryList([FromBody] BaseRequest ApiRequest)
         {
 //	        ApiRequest = ApiRequest ?? new BaseRequest{ sortField = "last_modified", sortDirection = "ASC"};
 //	        ApiRequest = ApiRequest ?? new BaseRequest();
 
 
-//	        List<GroceryItem> apiGroceryList = _groceryService.GetGroceryList();
 	        // Should return list of items from a select query
 	        List<GroceryItem> apiGroceryList = _groceryService.GetGroceryList(ApiRequest);
-//	        List<GroceryItem> apiGroceryList = ApiRequest == null ? _groceryService.GetGroceryList(): _groceryService.GetGroceryList(ApiRequest);
 
 			return apiGroceryList;
         }
 
 		// Inserts item with quantity or Updates item and quantity
-        [HttpPut]
-        public void InsertGroceryItem([FromBody] GroceryItem ApiRequest)
+        [HttpPost]
+		[Route("/api/v1/GroceryList/Create")]
+        public PostResponse CreateGroceryItem([FromBody] GroceryItem ApiRequest)
         {
 			// Null or Empty checks
 	        ApiRequest = ApiRequest ?? throw new NullReferenceException("Item object is null");
 
-			// Creates an item or updates an existing item's quantity
-			_groceryService.InsertGroceryItem(ApiRequest.name);
+			_groceryService.CreateGroceryItem(ApiRequest);
 
-	        if (ApiRequest.quantity > 0)
-	        {
-				// Reduces quantity by one to make up for the 1 added in the initial existence check
-		        ApiRequest.quantity--;
-
-				// Adds specified quantity
-				_groceryService.AddGroceryItem(ApiRequest);
-	        }
-	        else
-	        {
-				// Adds a single item
-		        _groceryService.AddGroceryItem(new GroceryItem { name = ApiRequest.name, quantity = 1 });
-	        }
+	        return new PostResponse("SUCCESS");
         }
 
-		 // DELETE API/values/5
-        [HttpDelete]
-        public void DeleteGroceryItem([FromBody] GroceryItem ApiRequest)
+	    [HttpPost]
+	    [Route("/api/v1/GroceryList/Update")]
+	    public PostResponse UpdateGroceryList([FromBody] GroceryItem ApiRequest)
+	    {
+
+	        ApiRequest = ApiRequest ?? throw new NullReferenceException("string is null");
+
+		    ApiRequest.quantity = ApiRequest.quantity < 1 ? 1 : ApiRequest.quantity;
+
+			_groceryService.UpdateGroceryList(ApiRequest);
+
+			return new PostResponse("SUCCESS");
+	    }
+
+		 // DELETE API/GroceryList/Delete
+        [HttpPost]
+		[Route("/api/v1/GroceryList/Delete")]
+        public PostResponse DeleteGroceryItem([FromBody] GroceryItem ApiRequest)
         {
 			// Null or Empty checks
 	        ApiRequest = ApiRequest ?? throw new NullReferenceException("string is null");
@@ -75,6 +80,8 @@ namespace GroceryList.Api
 				// Removes entire item and its quantity from the list
 				_groceryService.DeleteGroceryItem(ApiRequest.name);
 	        }
+
+			return new PostResponse("SUCCESS");
         }
     }
 }

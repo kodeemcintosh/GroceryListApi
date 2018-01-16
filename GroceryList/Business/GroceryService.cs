@@ -26,14 +26,14 @@ namespace GroceryList.Business
             return businessGroceryList;
         }
 
-		public void InsertGroceryItem(string name)
+		public void CreateGroceryItem(GroceryItem BusinessRequest)
         {
-	        _groceryRepository.InsertGroceryItem(name);
+	        _groceryRepository.CreateGroceryItem(BusinessRequest);
         }
 
-        public void AddGroceryItem(GroceryItem BusinessRequest)
+        public void UpdateGroceryList(GroceryItem BusinessRequest)
         {
-	        _groceryRepository.AddGroceryItem(BusinessRequest);
+	        _groceryRepository.UpdateGroceryList(BusinessRequest);
         }
 
 		public void RemoveGroceryItem(GroceryItem BusinessRequest)
@@ -45,6 +45,5 @@ namespace GroceryList.Business
 		{
 			_groceryRepository.DeleteGroceryItem(item);
 		}
-
     }
 }

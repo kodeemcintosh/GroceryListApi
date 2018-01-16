@@ -7,16 +7,16 @@ namespace GroceryList.Data
     public class GroceryRepository : IGrocery
     {
 	    private readonly GetGroceryList _getGroceryList;
-	    private readonly InsertGroceryItem _insertGroceryItem;
-	    private readonly UpdateGroceryItem _updateGroceryItem;
+	    private readonly CreateGroceryItem _createGroceryItem;
+	    private readonly UpdateGroceryList _updateGroceryList;
 	    private readonly RemoveGroceryItem _removeGroceryItem;
 	    private readonly DeleteGroceryItem _deleteGroceryItem;
 
-	    public GroceryRepository(GetGroceryList getGroceryList, InsertGroceryItem insertGroceryItem,UpdateGroceryItem updateGroceryItem,RemoveGroceryItem removeGroceryItem, DeleteGroceryItem deleteGroceryItem)
+	    public GroceryRepository(GetGroceryList getGroceryList, CreateGroceryItem createGroceryItem,UpdateGroceryList updateGroceryList,RemoveGroceryItem removeGroceryItem, DeleteGroceryItem deleteGroceryItem)
 	    {
 		    _getGroceryList = getGroceryList ?? throw new ArgumentNullException(nameof(getGroceryList));
-		    _insertGroceryItem = insertGroceryItem ?? throw new ArgumentNullException(nameof(insertGroceryItem));
-		    _updateGroceryItem = updateGroceryItem ?? throw new ArgumentNullException(nameof(updateGroceryItem));
+		    _createGroceryItem = createGroceryItem ?? throw new ArgumentNullException(nameof(createGroceryItem));
+		    _updateGroceryList = updateGroceryList ?? throw new ArgumentNullException(nameof(updateGroceryList));
 		    _removeGroceryItem = removeGroceryItem ?? throw new ArgumentNullException(nameof(removeGroceryItem));
 		    _deleteGroceryItem = deleteGroceryItem ?? throw new ArgumentNullException(nameof(deleteGroceryItem));
 	    }
@@ -35,14 +35,22 @@ namespace GroceryList.Data
 	        return dataGroceryList;
         }
 
-	    public void InsertGroceryItem(string name)
+	    public void CreateGroceryItem(GroceryItem DataRequest)
 	    {
-		    _insertGroceryItem.InsertGroceryItemQuery(name);
+		    if (!_createGroceryItem.CheckExistence(DataRequest.name))
+		    {
+				_createGroceryItem.CreateGroceryItemQuery(DataRequest);
+		    }
 	    }
 
-		public void AddGroceryItem(GroceryItem DataRequest)
+		public void UpdateGroceryList(GroceryItem DataRequest)
 	    {
-		    _updateGroceryItem.AddGroceryItemQuery(DataRequest);
+		    if (_createGroceryItem.CheckExistence(DataRequest.name))
+		    {
+				_updateGroceryList.UpdateGroceryListQuery(DataRequest);
+				return;
+		    }
+			_createGroceryItem.CreateGroceryItemQuery(DataRequest);
 	    }
 	    public void RemoveGroceryItem(GroceryItem DataRequest)
 	    {
@@ -52,6 +60,5 @@ namespace GroceryList.Data
 	    {
 		    _deleteGroceryItem.DeleteGroceryItemQuery(name);
 	    }
-
     }
 }

@@ -11,9 +11,9 @@ namespace GroceryList.Data.Queries
 
 		//	TODO: replace connection string local variables with environment variables
 	    private const string SERVER = "localhost";
-	    private const string DATABASE = "GroceryListDB";
-	    private const string USER = "kwik";
-	    private const string PASSWORD = "pNyn8_5E";
+	    private const string DATABASE = "gl_db";
+	    private const string USER = "gl_user";
+	    private const string PASSWORD = "cbf5fbb4-636b-4ce7-81d5-3dda794abd31";
 	    private static string GetConnectionString()
 	    {
 		    var csBuilder = new NpgsqlConnectionStringBuilder()
@@ -60,7 +60,8 @@ namespace GroceryList.Data.Queries
 			    cmd.ExecuteNonQuery();
 
 			    // Close Database Connection
-			    conn.Close();
+				conn.Close();
+				cmd.Dispose();
 		    }
 	    }
     }
